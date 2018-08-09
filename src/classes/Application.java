@@ -15,6 +15,8 @@ public class Application extends JFrame {
         setTitle("Happy Tanks");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setResizable(false);
+
     }
 
 
