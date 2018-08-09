@@ -8,11 +8,11 @@ public class Entities {
     private Boolean movable;
     private Image defaultPhoto;
 
-    public Entities() {
+    protected Entities() {
 
     }
 
-    public Entities(int hp, Boolean alive, Boolean movable, Image defaultPhoto) {
+    protected Entities(int hp, Boolean alive, Boolean movable, Image defaultPhoto) {
         this.hp = hp;
         this.alive = alive;
         this.movable = movable;
@@ -51,5 +51,4 @@ public class Entities {
         this.defaultPhoto = defaultPhoto;
     }
 
-    
 }
