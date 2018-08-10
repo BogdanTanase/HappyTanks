@@ -1,30 +1,27 @@
 package classes;
 
+
 import java.awt.*;
 
 
 public class Entities {
-    private int hp;
-    private Boolean alive;
-    private Boolean movable;
-    private Image photo;
-    private int x;
-    private int y;
-    private int mx=20; // multiplier for special entities
-    private int my=20;
+     private int hp;
+     private Boolean alive;
+     private Boolean movable;
+     private Image photo;
+     int x;
+     int y;
 
-    public Entities(){
+     Entities(){
     }
 
-    public Entities(int hp, Boolean alive, Boolean movable, Image defaultPhoto, int x, int y, int mx , int my) {
+    Entities(int hp, Boolean alive, Boolean movable, Image defaultPhoto, int x, int y) {
         this.hp = hp;
         this.alive = alive;
         this.movable = movable;
         this.photo = defaultPhoto;
         this.x = x;
         this.y = y;
-        this.mx = mx;
-        this.my = my;
     }
 
     public int getHp() {
@@ -51,11 +48,11 @@ public class Entities {
         this.movable = movable;
     }
 
-    public Image getPhoto() {
+    Image getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Image photo) {
+    void setPhoto(Image photo) {
         this.photo = photo;
     }
 
@@ -75,39 +72,6 @@ public class Entities {
         this.y = y;
     }
 
-    public int getMx() {
-        return mx;
-    }
-
-    public void setMx(int mx) {
-        this.mx = mx;
-    }
-
-    public int getMy() {
-        return my;
-    }
-
-    public void setMy(int my) {
-        this.my = my;
-    }
-
-    //movement set for possible moving childs
-
-    public void moveUp(){
-        x-=mx;
-    }
-
-    public void moveDown(){
-        x+=mx;
-    }
-
-    public void moveLeft(){
-        y-=my;
-    }
-
-    public void moveRight(){
-        y-=my;
-    }
 
 
 }
