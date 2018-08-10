@@ -3,19 +3,24 @@ package classes;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
-public class Tank extends Entities{
-    private Image tankFacingUp;
-    private Image tankFacingDown;
-    private Image tankFacingLeft;
-    private Image tankFacingRight;
+public class Tank extends Entities {
+     Image tankFacingUp;
+     Image tankFacingDown;
+     Image tankFacingLeft;
+     Image tankFacingRight;
+    int mx;
+    int my;
     public Tank() {
     }
 
-    public Tank(int hp, Boolean alive, Boolean movable, Image photo, int x, int y, int mx, int my) {
-        super(hp, alive, movable, photo, x, y, mx, my);
+    public Tank(int hp, Boolean alive, Boolean movable, Image photo, int x, int y,int mx, int my) {
+        super(hp, alive, movable, photo, x, y);
+        this.mx = mx;
+        this.my = my;
         try {
             tankFacingUp = ImageIO.read(new File("src/pictures/tankFacingUp.png"));
         }
@@ -40,35 +45,48 @@ public class Tank extends Entities{
         catch(IOException ex){
             System.out.println("tankFacingRight could not be found.");
         }
+
+    }
+
+    //movement methods
+    public void moveUp(){
+        if ( y < 20 ){
+            y = 0;
+        }
+        else{
+            y-=my;
+        }
+        setPhoto(tankFacingUp);
+    }
+
+    public void moveDown(){
+        if ( y < 550 ){
+            y+=my;
+        }
+        setPhoto(tankFacingDown);
+    }
+
+    public void moveLeft(){
+        if ( x < 20 ){
+            x = 0;
+        }
+        else{
+            x-=mx;
+        }
+        setPhoto(tankFacingLeft);
+    }
+
+    public void moveRight(){
+        if ( x  < 960){
+            x+=mx;
+        }
+        setPhoto(tankFacingRight);
     }
 
 
-    public void keyPressed(KeyEvent e){
-        int key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_LEFT) {
-            moveLeft();
-            setPhoto(tankFacingLeft);
-        }
-
-        if (key == KeyEvent.VK_RIGHT) {
-            moveRight();
-            setPhoto(tankFacingRight);
-        }
-
-        if (key == KeyEvent.VK_UP) {
-            moveUp();
-            setPhoto(tankFacingUp);
-        }
-
-        if (key == KeyEvent.VK_DOWN) {
-            moveDown();
-            setPhoto(tankFacingDown);
-        }
-    }
-
-    public void keyReleased(KeyEvent e){
-
+    //draw
+    public void drawTank(Graphics g){
+        g.drawImage(this.getPhoto(),x,y,null);
     }
 
 }
