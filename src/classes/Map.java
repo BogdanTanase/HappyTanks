@@ -3,33 +3,37 @@ package classes;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
-public class Map extends JPanel {
+public class Map extends JPanel implements KeyListener {
     private Image background;
+    private Image defaultTank;
     private Timer timer;
-    private Tank tank1;
+    private Tank tank1 = new Tank(10,true,true,defaultTank,0,0,20,20);
     private final int DELAY = 10;
+    private int[][] mat = new int[50][30];
 
-    public Map(){
+
+    Map(){
         initBoard();
     }
 
     private void initBoard() {
-        addKeyListener(new keyBinding());
+        addKeyListener(this);
         loadBackground();
         setPreferredSize(new Dimension(100,600));
         setFocusable(true);
-        setDoubleBuffered(true);
 
-        tank1= new Tank();
+        try{
+            defaultTank = ImageIO.read(new File("src/pictures/tankFacingLeft.png"));
+        }
+        catch(IOException ex){
+            System.out.println("Default tank picture not found");
+        }
 
-
+        populate();
     }
 
 
@@ -48,12 +52,6 @@ public class Map extends JPanel {
         Toolkit.getDefaultToolkit().sync(); // for smooth animation on Linux
     }
 
-    //tank
-    private void drawTank(Graphics g){
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(tank1.getPhoto(),tank1.getX(),tank1.getY(), this);
-    }
-
 
 
 
@@ -61,22 +59,49 @@ public class Map extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         drawBackground(g);
-        drawTank(g);
+        tank1.drawTank(g);
         repaint();
-        Toolkit.getDefaultToolkit().sync();
     }
 
+    //MOVEMENT KEY
+    @Override
+    public void keyTyped(KeyEvent e) {
 
-    private class keyBinding extends KeyAdapter {
+    }
 
-        @Override
-        public void keyReleased(KeyEvent e) {
-            tank1.keyReleased(e);
+    @Override
+    public void keyPressed(KeyEvent e){
+        Integer key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_LEFT) {
+            tank1.moveLeft(mat);
         }
 
-        @Override
-        public void keyPressed(KeyEvent e) {
-            tank1.keyPressed(e);
+        if (key == KeyEvent.VK_RIGHT) {
+            tank1.moveRight(mat);
+        }
+
+        if (key == KeyEvent.VK_UP) {
+            tank1.moveUp(mat);
+        }
+
+        if (key == KeyEvent.VK_DOWN) {
+            tank1.moveDown(mat);
         }
     }
+
+    @Override
+    public void keyReleased(KeyEvent e){
+
+    }
+
+    //Matrix of possible movement
+    private void populate(){
+        for ( int i = 10 ; i <= 20 ; i++){
+            for ( int j = 0 ; j <= 10; j++ ){
+                mat[i][j] = 1;
+            }
+        }
+    }
+
 }
