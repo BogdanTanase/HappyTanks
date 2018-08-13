@@ -55,7 +55,7 @@ public class Tank extends Entities {
            y = 0;
         }
         else{
-           if ( canMoveTo(mat)){
+           if ( canMoveTo(mat,x,y-my)){
                y-=my;
            }
         }
@@ -67,7 +67,7 @@ public class Tank extends Entities {
             y = 560;
         }
         else{
-            if ( canMoveTo(mat)){
+            if ( canMoveTo(mat,x,y+my)){
                 y+=my;
             }
         }
@@ -79,7 +79,7 @@ public class Tank extends Entities {
             x = 0;
         }
         else{
-            if ( canMoveTo(mat)){
+            if ( canMoveTo(mat,x-mx,y)){
                 x-=mx;
             }
         }
@@ -91,7 +91,7 @@ public class Tank extends Entities {
             x = 960;
         }
         else{
-            if ( canMoveTo(mat)){
+            if ( canMoveTo(mat,x+mx,y)){
                 x+=mx;
             }
         }
@@ -103,11 +103,11 @@ public class Tank extends Entities {
         g.drawImage(this.getPhoto(),x,y,null);
     }
 
-    private Boolean canMoveTo(int[][] mat){
+    private Boolean canMoveTo(int[][] mat, int nx, int ny){
         if ( x < 0 || x > 960 || y < 0 || y > 560 ){
             return false;
         }
-        if ( mat[x/20][y/20] == 0 ){
+        if ( mat[nx/20][ny/20] == 0 ){
             return true;
         }
         return false;

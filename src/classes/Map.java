@@ -97,8 +97,20 @@ public class Map extends JPanel implements KeyListener {
 
     //Matrix of possible movement
     private void populate(){
-        for ( int i = 10 ; i <= 20 ; i++){
-            for ( int j = 0 ; j <= 10; j++ ){
+        for ( int i = 10 ; i < 20 ; i++){
+            for ( int j = 0 ; j < 10; j++ ){
+                mat[i][j] = 1;
+            }
+        }
+
+        for ( int i = 5 ; i < 15 ; i++){
+            for ( int j = 15 ; j < 20; j++ ){
+                mat[i][j] = 1;
+            }
+        }
+
+        for ( int i = 8 ; i < 12 ; i++){
+            for ( int j = 20 ; j < 30; j++ ){
                 mat[i][j] = 1;
             }
         }
