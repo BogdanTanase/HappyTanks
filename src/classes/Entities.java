@@ -5,7 +5,6 @@ import java.awt.*;
 
 
 public class Entities {
-     private int hp;
      private Boolean alive;
      private Boolean movable;
      private Image photo;
@@ -15,21 +14,12 @@ public class Entities {
      Entities(){
     }
 
-    Entities(int hp, Boolean alive, Boolean movable, Image defaultPhoto, int x, int y) {
-        this.hp = hp;
+    Entities(Boolean alive, Boolean movable, Image defaultPhoto, int x, int y) {
         this.alive = alive;
         this.movable = movable;
         this.photo = defaultPhoto;
         this.x = x;
         this.y = y;
-    }
-
-    public int getHp() {
-        return hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
     }
 
     public Boolean getAlive() {
@@ -71,7 +61,5 @@ public class Entities {
     public void setY(int y) {
         this.y = y;
     }
-
-
 
 }

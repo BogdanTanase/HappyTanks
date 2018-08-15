@@ -6,14 +6,19 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Map extends JPanel implements KeyListener {
     private Image background;
     private Image defaultTank;
+    private Image projectilePhoto;
     private Timer timer;
-    private Tank tank1 = new Tank(10,true,true,defaultTank,0,0,20,20);
+    private Tank tank1 = new Tank(true,true,defaultTank,0,0,20,20);
     private final int DELAY = 10;
     private int[][] mat = new int[50][30];
+    private List<Projectile> projectileList = new ArrayList<Projectile>();
+    private Projectile p;
 
 
     Map(){
@@ -31,6 +36,12 @@ public class Map extends JPanel implements KeyListener {
         }
         catch(IOException ex){
             System.out.println("Default tank picture not found");
+        }
+        try{
+            projectilePhoto = ImageIO.read(new File("src/pictures/projectile.png"));
+        }
+        catch(IOException ex){
+            System.out.println("Default projectile picture not found");
         }
 
         populate();
@@ -60,6 +71,10 @@ public class Map extends JPanel implements KeyListener {
         super.paintComponent(g);
         drawBackground(g);
         tank1.drawTank(g);
+        for ( int i = 0 ; i < projectileList.size() ; i++){
+            projectileList.get(i).move();
+            repaint();
+        }
         repaint();
     }
 
@@ -87,6 +102,11 @@ public class Map extends JPanel implements KeyListener {
 
         if (key == KeyEvent.VK_DOWN) {
             tank1.moveDown(mat);
+        }
+        if (key == KeyEvent.VK_SPACE) {
+            p = tank1.fire(mat);
+            p.setPhoto(projectilePhoto);
+            projectileList.add(p);
         }
     }
 

@@ -12,13 +12,14 @@ public class Tank extends Entities {
     private Image tankFacingDown;
     private Image tankFacingLeft;
     private Image tankFacingRight;
+    private String direction;
     private int mx;
     private int my;
     public Tank() {
     }
 
-    Tank(int hp, Boolean alive, Boolean movable, Image photo, int x, int y,int mx, int my) {
-        super(hp, alive, movable, photo, x, y);
+    Tank(Boolean alive, Boolean movable, Image photo, int x, int y,int mx, int my) {
+        super(alive, movable, photo, x, y);
         this.mx = mx;
         this.my = my;
         try {
@@ -51,6 +52,7 @@ public class Tank extends Entities {
     //movement methods
     void moveUp(int[][] mat){
         setPhoto(tankFacingUp);
+        direction="up";
         if ( y < 20 ){
            y = 0;
         }
@@ -63,6 +65,7 @@ public class Tank extends Entities {
 
     void moveDown(int[][] mat){
         setPhoto(tankFacingDown);
+        direction="down";
         if ( y >= 560 ){
             y = 560;
         }
@@ -75,6 +78,7 @@ public class Tank extends Entities {
 
     void moveLeft(int[][] mat){
         setPhoto(tankFacingLeft);
+        direction="left";
         if ( x < 20 ){
             x = 0;
         }
@@ -87,6 +91,7 @@ public class Tank extends Entities {
 
     void moveRight(int[][] mat){
         setPhoto(tankFacingRight);
+        direction="right";
         if ( x >= 960 ){
             x = 960;
         }
@@ -95,6 +100,39 @@ public class Tank extends Entities {
                 x+=mx;
             }
         }
+    }
+
+    //fire projectiles
+    Projectile fire(int[][] mat){
+        Projectile p = null;
+        switch(direction) {
+            case "up":{
+                if ( canMoveTo(mat,x,y-my)){
+                    p = new Projectile(true,true,null,this.x,this.y-my,0,-20,2);
+                }
+                break;
+            }
+            case "down":{
+                if ( canMoveTo(mat,x,y+my)){
+                    p = new Projectile(true,true,null,this.x,this.y+my,0,20,2);
+                }
+                break;
+            }
+            case "left":{
+                if ( canMoveTo(mat,x-mx,y)){
+                    p = new Projectile(true,true,null,this.x-mx,this.y,-20,0,2);
+                }
+                break;
+            }
+            case "right":{
+                if ( canMoveTo(mat,x+mx,y)){
+                    p = new Projectile(true,true,null,this.x+mx,this.y,20,0,2);
+                }
+                break;
+            }
+        }
+        return p;
+
     }
 
 
